@@ -5,6 +5,7 @@ AllCops:
     - bin/**/*
     - tmp/**/*
     - vendor/**/*
+    - inventory.rb
 
 Style/Documentation:
   Enabled: false
