@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_02_115131) do
+ActiveRecord::Schema.define(version: 2020_10_02_124620) do
+
+  create_table "store_events", force: :cascade do |t|
+    t.integer "store_id"
+    t.integer "store_model_id"
+    t.integer "inventory"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_store_events_on_created_at"
+    t.index ["store_id"], name: "index_store_events_on_store_id"
+    t.index ["store_model_id"], name: "index_store_events_on_store_model_id"
+  end
 
   create_table "store_models", force: :cascade do |t|
     t.integer "store_id"
