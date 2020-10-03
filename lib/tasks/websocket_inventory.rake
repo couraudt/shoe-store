@@ -16,13 +16,15 @@ namespace :websocket do
       ws = Faye::WebSocket::Client.new('ws://0.0.0.0:3000/websocket')
 
       loop = EM.add_periodic_timer(1) do
-        data = {
-          store: STORE_STORES.sample,
-          model: SHOES_MODELS.sample,
-          inventory: INVENTORY.sample
-        }
-        Rails.logger.info "Sending data: #{data}"
-        ws.send(JSON.generate(command: 'message', identifier: JSON.generate(channel: StoreEvent::WS_CHANNEL_NAME), data: JSON.generate(data)))
+        RANDOMNESS.sample.times do
+          data = {
+            store: STORE_STORES.sample,
+            model: SHOES_MODELS.sample,
+            inventory: INVENTORY.sample
+          }
+          Rails.logger.info "Sending data: #{data}"
+          ws.send(JSON.generate(command: 'message', identifier: JSON.generate(channel: StoreEvent::WS_CHANNEL_NAME), data: JSON.generate(data)))
+        end
       end
 
       ws.on :open do
