@@ -7,7 +7,7 @@ class StoreEvent < ApplicationRecord
   belongs_to :store_model
 
   validates :store, :store_model, :inventory, presence: true
-  validates :inventory, numericality: { only_integer: true, greater_than: 0 }
+  validates :inventory, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   after_commit :update_inventory
 

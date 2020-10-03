@@ -40,7 +40,7 @@ RSpec.describe StoreEvent do
     end
 
     it 'be valid with a existent inventory' do
-      expect(build_stubbed(:store_event, inventory: 42)).to be_valid
+      expect(build_stubbed(:store_event, inventory: 0)).to be_valid
     end
   end
 
