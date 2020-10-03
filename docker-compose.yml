@@ -17,7 +17,7 @@ services:
       RAILS_LOG_TO_STDOUT: 1
       BUNDLE_PATH: /app/vendor/bundle
       MYSQL_DATABASE: potloc
-      MYSQL_USER: potloc
+      MYSQL_USER: root
       MYSQL_PASSWORD: password
       MYSQL_SERVER: db
 
@@ -33,9 +33,6 @@ services:
     ports:
       - "127.0.0.1:3306:3306"
     environment:
-      MYSQL_DATABASE: potloc
-      MYSQL_USER: potloc
-      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
 
 volumes:
