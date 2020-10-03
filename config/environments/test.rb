@@ -55,4 +55,6 @@ Rails.application.configure do
   config.logger    = ActiveSupport::TaggedLogging.new(logger)
 
   config.log_level = :debug
+
+  config.active_job.queue_adapter = :test
 end

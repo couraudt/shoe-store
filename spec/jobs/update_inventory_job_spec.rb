@@ -100,5 +100,13 @@ RSpec.describe UpdateInventoryJob do
     it 'do not creates an event in db' do
       expect { UpdateInventoryJob.perform_now(data) }.to change { StoreEvent.count }.by(0)
     end
+
+    it 'enqueue the job back on first error' do
+      expect { UpdateInventoryJob.perform_now(data) }.to have_enqueued_job(UpdateInventoryJob).with(data, 1)
+    end
+
+    it 'do not enqueue the job back on third errors' do
+      expect { UpdateInventoryJob.perform_now(data, 3) }.to_not have_enqueued_job(UpdateInventoryJob)
+    end
   end
 end
