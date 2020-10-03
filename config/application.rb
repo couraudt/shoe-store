@@ -28,5 +28,8 @@ module ShoeStore
 
     config.action_cable.mount_path = '/websocket'
     config.action_cable.disable_request_forgery_protection = true
+
+    config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.deliver_later_queue_name = 'default' # use default queue for mails
   end
 end
