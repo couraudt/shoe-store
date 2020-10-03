@@ -12,9 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_10_02_124620) do
 
-  create_table "store_events", force: :cascade do |t|
-    t.integer "store_id"
-    t.integer "store_model_id"
+  create_table "store_events", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "store_id"
+    t.bigint "store_model_id"
     t.integer "inventory"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 2020_10_02_124620) do
     t.index ["store_model_id"], name: "index_store_events_on_store_model_id"
   end
 
-  create_table "store_models", force: :cascade do |t|
-    t.integer "store_id"
+  create_table "store_models", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "store_id"
     t.string "name"
     t.integer "inventory"
     t.datetime "created_at", precision: 6, null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2020_10_02_124620) do
     t.index ["store_id"], name: "index_store_models_on_store_id"
   end
 
-  create_table "stores", force: :cascade do |t|
+  create_table "stores", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.integer "models_count"
     t.datetime "created_at", precision: 6, null: false

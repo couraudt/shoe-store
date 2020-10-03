@@ -1,6 +1,6 @@
 FROM ruby:2.7.1-alpine
 
-ENV BUILD_PACKAGES="build-base libxml2-dev libxslt-dev sqlite-dev tzdata"
+ENV BUILD_PACKAGES="build-base libxml2-dev libxslt-dev mariadb-connector-c-dev tzdata"
 
 RUN apk add --no-cache $BUILD_PACKAGES
 

@@ -11,7 +11,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faye-websocket'
 gem 'puma', '~> 4.1'
 gem 'sidekiq', '~> 6.1'
-gem 'sqlite3', '~> 1.4'
+gem 'mysql2', '~> 0.5.3'
 
 group :development, :test do
   gem 'rspec-rails', '~> 4.0.0'
