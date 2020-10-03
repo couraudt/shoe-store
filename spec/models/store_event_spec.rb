@@ -34,6 +34,22 @@ RSpec.describe StoreEvent do
     end
   end
 
+  context 'validates presence of inventory' do
+    it 'not be valid with empty inventory' do
+      expect(build_stubbed(:store_event, inventory: nil)).to_not be_valid
+    end
+
+    it 'be valid with a existent inventory' do
+      expect(build_stubbed(:store_event, inventory: 42)).to be_valid
+    end
+  end
+
+  context 'validates numericality of inventory' do
+    it 'not be valid with a negative inventory' do
+      expect(build_stubbed(:store_event, inventory: -42)).to_not be_valid
+    end
+  end
+
   it 'update related inventory' do
     create(:store_event, store: store, store_model: store_model)
     last_event = create(:store_event, store: store, store_model: store_model)
