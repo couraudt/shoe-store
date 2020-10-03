@@ -14,6 +14,7 @@ namespace :websocket do
 
     EM.run do
       ws = Faye::WebSocket::Client.new('ws://0.0.0.0:3000/websocket')
+      count = 1
 
       loop = EM.add_periodic_timer(1) do
         RANDOMNESS.sample.times do
@@ -22,8 +23,9 @@ namespace :websocket do
             model: SHOES_MODELS.sample,
             inventory: INVENTORY.sample
           }
-          Rails.logger.info "Sending data: #{data}"
+          Rails.logger.info "Sending data (#{count}): #{data}"
           ws.send(JSON.generate(command: 'message', identifier: JSON.generate(channel: StoreEvent::WS_CHANNEL_NAME), data: JSON.generate(data)))
+          count += 1
         end
       end
 
