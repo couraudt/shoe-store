@@ -2,6 +2,6 @@
 
 class StoreModelInventoryChannel < ApplicationCable::Channel
   def receive(data)
-    Rails.logger.info "receive #{data}"
+    UpdateInventoryJob.perform_later(data)
   end
 end
