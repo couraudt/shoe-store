@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class StoreEvent < ApplicationRecord
+  WS_CHANNEL_NAME = 'StoreModelInventoryChannel'
+
   belongs_to :store
   belongs_to :store_model
 
