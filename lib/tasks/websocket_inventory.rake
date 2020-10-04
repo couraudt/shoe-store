@@ -12,7 +12,7 @@ namespace :websocket do
 
     puts "Start sending random inventory on channel #{StoreEvent::WS_CHANNEL_NAME}..."
 
-    trap('SIGINT') { puts 'Exiting' and exit! }
+    trap('SIGINT') { exit! }
 
     EM.run do
       ws = Faye::WebSocket::Client.new('ws://0.0.0.0:3000/websocket')
