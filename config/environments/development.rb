@@ -62,6 +62,9 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  # Whitelist all hostnames
+  config.hosts.clear
+
   if ENV['RAILS_LOG_TO_STDOUT'].present?
     $stdout.sync     = true
     logger           = ActiveSupport::Logger.new($stdout)
