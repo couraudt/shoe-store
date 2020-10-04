@@ -1,0 +1,216 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Store Shoes API Documentation
+  description: |
+    Api pagination:
+    -----------------
+    List of stores and models are paginated, information can be found in the http response headers:
+    ```
+    Link:
+      schema:
+        type: string
+      description: Links to first, prev, next and last pages.
+    Total:
+      schema:
+        type: integer
+      description: The total number of entries.
+    Per-Page:
+      schema:
+        type: integer
+      description: Number of results per page.
+    ```
+servers:
+  - url: "http://localhost:3000/api"
+tags:
+  - name: stores
+  - name: models
+paths:
+  /stores:
+    get:
+      tags:
+        - stores
+      summary: List of Stores
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoresIndex"
+          headers:
+            Link:
+              schema:
+                $ref: "#/components/schemas/StoresHeaderLink"
+            Total:
+              schema:
+                $ref: "#/components/schemas/HeaderTotal"
+            Per-Page:
+              schema:
+                $ref: "#/components/schemas/HeaderPerPage"
+        "500":
+          $ref: "#/components/responses/UnexpectedError"
+  "/stores/{id}":
+    get:
+      tags:
+        - stores
+      summary: Find a Store by store id
+      parameters:
+        - in: path
+          name: id
+          description: Store ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StoresShow"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/UnexpectedError"
+  "/stores/{store_id}/models":
+    get:
+      tags:
+        - models
+      summary: List of Models in a Store
+      parameters:
+        - in: path
+          name: store_id
+          description: Store ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelsIndex"
+          headers:
+            Link:
+              schema:
+                $ref: "#/components/schemas/ModelsHeaderLink"
+            Total:
+              schema:
+                $ref: "#/components/schemas/HeaderTotal"
+            Per-Page:
+              schema:
+                $ref: "#/components/schemas/HeaderPerPage"
+        "500":
+          $ref: "#/components/responses/UnexpectedError"
+  "/stores/{store_id}/models/{id}":
+    get:
+      tags:
+        - models
+      summary: Find a Model by model id
+      parameters:
+        - in: path
+          name: store_id
+          description: Store ID
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: id
+          description: Model ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelsShow"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/UnexpectedError"
+components:
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "404"
+              message:
+                type: string
+                example: Not found
+    UnexpectedError:
+      description: Unexpected Error due to internal issue
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "500"
+              message:
+                type: string
+                example: Internal Server Error
+  schemas:
+    StoresIndex:
+      type: array
+      items:
+        $ref: "#/components/schemas/StoresShow"
+    StoresShow:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: ALDO Centre Eaton
+        models_count:
+          type: integer
+          example: 1
+        models:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/ModelsIndex"
+    ModelsIndex:
+      type: array
+      items:
+        $ref: "#/components/schemas/ModelsShow"
+    ModelsShow:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        store_id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: ADERI
+        inventory:
+          type: integer
+          example: 42
+    StoresHeaderLink:
+      type: string
+      example: '<http://localhost:3000/api/stores?page=1>; rel="first", <http://localhost:3000/api/stores?page=173>; rel="last", <http://localhost:3000/api/stores?page=6>; rel="next", <http://localhost:3000/api/stores?page=4>; rel="prev"'
+    ModelsHeaderLink:
+      type: string
+      example: '<http://localhost:3000/api/stores/1/models?page=1>; rel="first", <http://localhost:3000/api/stores/1/models?page=173>; rel="last", <http://localhost:3000/api/stores/1/models?page=6>; rel="next", <http://localhost:3000/api/stores/1/models?page=4>; rel="prev"'
+    HeaderTotal:
+      type: string
+      example: 4321
+    HeaderPerPage:
+      type: string
+      example: 25

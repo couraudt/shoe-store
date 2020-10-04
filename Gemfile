@@ -7,8 +7,11 @@ ruby '2.7.1'
 
 gem 'rails', '~> 6.0.3', '>= 6.0.3.3'
 
+gem 'api-pagination', '~> 4.8'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faye-websocket'
+gem 'jbuilder', '~> 2.7'
+gem 'kaminari', '~> 1.2'
 gem 'mysql2', '~> 0.5.3'
 gem 'puma', '~> 4.1'
 gem 'sidekiq', '~> 6.1'

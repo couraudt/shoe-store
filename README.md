@@ -11,17 +11,14 @@ docker-compose run --rm website rails db:setup
 
 ### Inventory Server
 
-Your WebSocket Server is the tap that aggregates inventories from all stores.
-
-You can run it directly from your own machine.
-
 Run the following to start tapping into the inventory events.
 
 ```
 docker-compose exec website rails websocket:inventory
 ```
 
-add sidekiq server
-catch ctrl+c on inventory
-Blocked host: allow all
-ws on website host
+## API
+
+The API documentation can be viewed using Swagger Editor:
+
+https://editor.swagger.io/?url=https://raw.githubusercontent.com/couraudt/shoe-store/master/api-description-swagger.yaml

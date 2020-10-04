@@ -5,7 +5,9 @@ FactoryBot.define do
     sequence(:name) { |n| "Store #{n}" }
 
     trait :with_models do
-      models { [association(:store_model)] }
+      after(:create) do |store|
+        create(:store_model, store: store)
+      end
     end
   end
 end
