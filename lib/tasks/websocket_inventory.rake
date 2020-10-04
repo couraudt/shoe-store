@@ -10,7 +10,9 @@ namespace :websocket do
     INVENTORY = Array(0..100)
     RANDOMNESS = Array(1..3)
 
-    Rails.logger.info "Start sending random inventory on channel #{StoreEvent::WS_CHANNEL_NAME}..."
+    puts "Start sending random inventory on channel #{StoreEvent::WS_CHANNEL_NAME}..."
+
+    trap('SIGINT') { puts 'Exiting' and exit! }
 
     EM.run do
       ws = Faye::WebSocket::Client.new('ws://0.0.0.0:3000/websocket')
@@ -23,23 +25,23 @@ namespace :websocket do
             model: SHOES_MODELS.sample,
             inventory: INVENTORY.sample
           }
-          Rails.logger.info "Sending data (#{count}): #{data}"
+          puts "Sending data (#{count}): #{data}"
           ws.send(JSON.generate(command: 'message', identifier: JSON.generate(channel: StoreEvent::WS_CHANNEL_NAME), data: JSON.generate(data)))
           count += 1
         end
       end
 
       ws.on :open do
-        Rails.logger.info "Connection opened with the rails server @ 'ws://0.0.0.0:3000/websocket'"
+        puts "Connection opened with the rails server @ 'ws://0.0.0.0:3000/websocket'"
         ws.send(JSON.generate(command: 'subscribe', identifier: JSON.generate(channel: StoreEvent::WS_CHANNEL_NAME)))
       end
 
       ws.on :error do |event|
-        Rails.logger.warn "Connection error with the rails server. Rails server is up? Error message: #{event.message}"
+        puts "Connection error with the rails server. Rails server is up? Error message: #{event.message}"
       end
 
       ws.on :close do |event|
-        Rails.logger.info "Connection closed with the rails server. Code: #{event.code}. Reason: #{event.reason}"
+        puts "Connection closed with the rails server. Code: #{event.code}. Reason: #{event.reason}"
         EM.cancel_timer(loop)
         ws = nil
       end
