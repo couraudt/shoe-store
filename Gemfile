@@ -7,6 +7,7 @@ ruby '2.7.1'
 
 gem 'rails', '~> 6.0.3', '>= 6.0.3.3'
 
+gem 'activeadmin', '~> 2.8'
 gem 'api-pagination', '~> 4.8'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'faye-websocket'
