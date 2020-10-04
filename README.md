@@ -20,3 +20,8 @@ Run the following to start tapping into the inventory events.
 ```
 docker-compose exec website rails websocket:inventory
 ```
+
+add sidekiq server
+catch ctrl+c on inventory
+Blocked host: allow all
+ws on website host

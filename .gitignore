@@ -33,3 +33,5 @@
 
 /spec/examples.txt
 /vendor/bundle
+
+docker-compose.override.yml

@@ -4,22 +4,28 @@ services:
   website:
     build:
       context: .
-    command: tail -f /dev/null
+    depends_on:
+      - db
+      - redis
+      - sidekiq
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    env_file:
+      - env.web
+
+  sidekiq:
+    build:
+      context: .
+    command: ["sidekiq", "-C", "config/sidekiq.yml"]
     depends_on:
       - db
       - redis
     volumes:
       - .:/app
-    ports:
-      - "3000:3000"
-    environment:
-      RAILS_ENV: development
-      RAILS_LOG_TO_STDOUT: 1
-      BUNDLE_PATH: /app/vendor/bundle
-      MYSQL_DATABASE: potloc
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      MYSQL_SERVER: db
+    env_file:
+      - env.web
 
   redis:
     image: redis:5-alpine3.9

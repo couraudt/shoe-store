@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UpdateInventoryJob < ApplicationJob
-  queue_as :default
+  queue_as :inventory
 
   def perform(data, retries = 0)
     Rails.logger.warn "Bad data found when parsing #{data}. Exiting" and return if %w[store model inventory].any? { |attr| !data[attr] || data[attr].blank? }
