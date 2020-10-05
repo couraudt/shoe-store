@@ -55,4 +55,8 @@ RSpec.describe StoreEvent do
     last_event = create(:store_event, store: store, store_model: store_model)
     expect(store_model.inventory).to eq(last_event.inventory)
   end
+
+  it 'broadcast an event to dashboard' do
+    expect { create(:store_event, store: store, store_model: store_model) }.to have_broadcasted_to('dashboard')
+  end
 end

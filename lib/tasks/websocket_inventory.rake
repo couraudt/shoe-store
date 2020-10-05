@@ -15,7 +15,7 @@ namespace :websocket do
     trap('SIGINT') { exit! }
 
     EM.run do
-      ws = Faye::WebSocket::Client.new('ws://0.0.0.0:3000/websocket')
+      ws = Faye::WebSocket::Client.new('ws://0.0.0.0:3000/cable')
       count = 1
 
       loop = EM.add_periodic_timer(1) do
@@ -32,7 +32,7 @@ namespace :websocket do
       end
 
       ws.on :open do
-        puts "Connection opened with the rails server @ 'ws://0.0.0.0:3000/websocket'"
+        puts "Connection opened with the rails server @ 'ws://0.0.0.0:3000/cable'"
         ws.send(JSON.generate(command: 'subscribe', identifier: JSON.generate(channel: StoreEvent::WS_CHANNEL_NAME)))
       end
 
