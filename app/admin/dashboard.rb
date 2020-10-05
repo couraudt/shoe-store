@@ -6,11 +6,11 @@ ActiveAdmin.register_page 'Dashboard' do
   content title: proc { I18n.t('active_admin.dashboard') } do
     columns do
       column do
-        panel 'Last 20 Received Events', id: 'last_events' do
-          table_for [] do
-            column 'Store'
-            column 'Store Model'
-            column 'Inventory'
+        panel 'Last 20 Received Events (updated in realtime)', id: 'last_events' do
+          table_for StoreEvent.all.includes(:store, :store_model).limit(20).order('created_at desc') do
+            column :store
+            column :store_model
+            column :inventory
           end
         end
       end
